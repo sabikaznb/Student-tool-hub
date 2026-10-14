@@ -294,35 +294,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Physical keyboard support
-  window.addEventListener('keydown', function (event) {
-    const active = document.activeElement;
-
-    if (
-      active &&
-      ['input', 'textarea'].includes(active.tagName.toLowerCase())
-    ) {
-      return;
-    }
-
-    if (/^[0-9]$/.test(event.key)) {
-      appendCharacter(event.key);
-    } else if (
-      ['+', '-', '*', '/', '(', ')', '^', '.'].includes(event.key)
-    ) {
-      appendCharacter(event.key);
-    } else if (event.key === 'Enter' || event.key === '=') {
-      event.preventDefault();
-      evaluateCurrent();
-    } else if (event.key === 'Backspace') {
-      deleteLast();
-    } else if (event.key === 'Escape') {
-      clearAll();
-    } else if (event.key === 'x' || event.key === 'X') {
-      appendCharacter('x');
-    }
-  });
-});</script>
-</body>
-</html>
-
+  // 
