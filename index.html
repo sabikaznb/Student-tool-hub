@@ -1,0 +1,317 @@
+
+/**
+ * MathPilot UI Controller
+ * Safer event handling and error checking
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  const exprInput = document.getElementById('calc-expression');
+  const resultDisplay = document.getElementById('calc-result');
+  const historyList = document.getElementById('history-list');
+  const modeToggle = document.getElementById('btn-mode-toggle');
+  const themeToggle = document.getElementById('btn-theme-toggle');
+
+  let currentExpression = '';
+  let memoryRegister = 0;
+  let grapher = null;
+
+  // Check if the math engine is available
+  function getEngine() {
+    if (
+      !window.MathEngine ||
+      typeof window.MathEngine.evaluate !== 'function'
+    ) {
+      throw new Error(
+        'Math engine missing. Please check the MathEngine script.'
+      );
+    }
+    return window.MathEngine;
+  }
+
+  // Initialize graph safely
+  const canvas = document.getElementById('graph-canvas');
+
+  if (canvas && typeof window.MathGrapher === 'function') {
+    try {
+      grapher = new window.MathGrapher('graph-canvas');
+
+      window.addEventListener('resize', function () {
+        if (grapher && typeof grapher.resize === 'function') {
+          grapher.resize();
+        }
+      });
+    } catch (error) {
+      console.error('Grapher initialization failed:', error);
+    }
+  }
+
+  // Load saved theme
+  try {
+    const savedTheme = localStorage.getItem('mp_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  } catch (error) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  // Theme toggle
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      const currentTheme =
+        document.documentElement.getAttribute('data-theme');
+
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+      document.documentElement.setAttribute('data-theme', newTheme);
+
+      try {
+        localStorage.setItem('mp_theme', newTheme);
+      } catch (error) {
+        console.warn('Theme preference could not be saved.');
+      }
+
+      if (grapher && typeof grapher.draw === 'function') {
+        grapher.draw();
+      }
+    });
+  }
+
+  // Keep expression synchronized with the input
+  if (exprInput) {
+    exprInput.addEventListener('input', function () {
+      currentExpression = exprInput.value;
+    });
+  }
+
+  // Evaluate current expression
+  function evaluateCurrent() {
+    if (!currentExpression.trim()) {
+      if (resultDisplay) resultDisplay.textContent = '0';
+      return;
+    }
+
+    try {
+      const engine = getEngine();
+      const result = engine.evaluate(currentExpression);
+
+      if (resultDisplay) {
+        resultDisplay.textContent = '= ' + result;
+      }
+
+      saveHistory(currentExpression, result);
+
+      if (
+        grapher &&
+        currentExpression.includes('x') &&
+        typeof grapher.draw === 'function'
+      ) {
+        grapher.currentExpression = currentExpression;
+        grapher.draw();
+      }
+    } catch (error) {
+      if (resultDisplay) {
+        resultDisplay.textContent =
+          error.message || 'Invalid expression';
+      }
+      console.error('Calculation error:', error);
+    }
+  }
+
+  // Append a character
+  function appendCharacter(value) {
+    if (value === undefined || value === null) return;
+
+    currentExpression += String(value);
+
+    if (exprInput) {
+      exprInput.value = currentExpression;
+    }
+  }
+
+  // Clear calculator
+  function clearAll() {
+    currentExpression = '';
+
+    if (exprInput) exprInput.value = '';
+    if (resultDisplay) resultDisplay.textContent = '0';
+  }
+
+  // Delete last character
+  function deleteLast() {
+    currentExpression = currentExpression.slice(0, -1);
+
+    if (exprInput) {
+      exprInput.value = currentExpression;
+    }
+  }
+
+  // Save calculation history safely
+  function saveHistory(expression, result) {
+    if (!historyList) return;
+
+    const item = document.createElement('li');
+    item.className = 'history-item';
+
+    const exprSpan = document.createElement('span');
+    exprSpan.className = 'h-expr';
+    exprSpan.textContent = expression;
+
+    const resultStrong = document.createElement('strong');
+    resultStrong.className = 'h-res';
+    resultStrong.textContent = String(result);
+
+    item.appendChild(exprSpan);
+    item.appendChild(document.createTextNode(' = '));
+    item.appendChild(resultStrong);
+
+    item.addEventListener('click', function () {
+      currentExpression = expression;
+
+      if (exprInput) exprInput.value = expression;
+
+      if (resultDisplay) {
+        resultDisplay.textContent = '= ' + result;
+      }
+    });
+
+    historyList.prepend(item);
+
+    while (historyList.children.length > 20) {
+      historyList.removeChild(historyList.lastElementChild);
+    }
+  }
+
+  // Calculator button events
+  document.querySelectorAll('button[data-act]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const action = button.dataset.act;
+      const value = button.dataset.val;
+
+      switch (action) {
+        case 'append':
+          appendCharacter(value);
+          break;
+
+        case 'eval':
+          evaluateCurrent();
+          break;
+
+        case 'clear':
+          clearAll();
+          break;
+
+        case 'delete':
+          deleteLast();
+          break;
+
+        case 'mem-add':
+          try {
+            memoryRegister += getEngine().evaluate(
+              currentExpression || '0'
+            );
+          } catch (error) {
+            console.error('Memory add error:', error);
+            if (resultDisplay) {
+              resultDisplay.textContent =
+                error.message || 'Memory operation failed';
+            }
+          }
+          break;
+
+        case 'mem-recall':
+          appendCharacter(memoryRegister);
+          break;
+
+        case 'mem-clear':
+          memoryRegister = 0;
+          break;
+      }
+    });
+  });
+
+  // Radians / degrees toggle
+  if (modeToggle) {
+    modeToggle.addEventListener('click', function () {
+      try {
+        const engine = getEngine();
+
+        if (typeof engine.setMode !== 'function') {
+          throw new Error('Angle mode function is missing.');
+        }
+
+        const newMode = engine.mode === 'RAD' ? 'DEG' : 'RAD';
+        engine.setMode(newMode);
+        modeToggle.textContent = newMode;
+
+        evaluateCurrent();
+      } catch (error) {
+        if (resultDisplay) {
+          resultDisplay.textContent = error.message;
+        }
+      }
+    });
+  }
+
+  // Graph controls
+  const graphExprInput =
+    document.getElementById('graph-expression-input');
+
+  const plotButton =
+    document.getElementById('btn-graph-plot');
+
+  if (plotButton && graphExprInput && grapher) {
+    plotButton.addEventListener('click', function () {
+      grapher.currentExpression = graphExprInput.value;
+      grapher.draw();
+    });
+
+    const zoomIn = document.getElementById('btn-graph-zin');
+    const zoomOut = document.getElementById('btn-graph-zout');
+    const resetGraph = document.getElementById('btn-graph-reset');
+
+    if (zoomIn) {
+      zoomIn.addEventListener('click', function () {
+        grapher.zoom(0.8);
+      });
+    }
+
+    if (zoomOut) {
+      zoomOut.addEventListener('click', function () {
+        grapher.zoom(1.2);
+      });
+    }
+
+    if (resetGraph) {
+      resetGraph.addEventListener('click', function () {
+        grapher.reset();
+      });
+    }
+  }
+
+  // Physical keyboard support
+  window.addEventListener('keydown', function (event) {
+    const active = document.activeElement;
+
+    if (
+      active &&
+      ['input', 'textarea'].includes(active.tagName.toLowerCase())
+    ) {
+      return;
+    }
+
+    if (/^[0-9]$/.test(event.key)) {
+      appendCharacter(event.key);
+    } else if (
+      ['+', '-', '*', '/', '(', ')', '^', '.'].includes(event.key)
+    ) {
+      appendCharacter(event.key);
+    } else if (event.key === 'Enter' || event.key === '=') {
+      event.preventDefault();
+      evaluateCurrent();
+    } else if (event.key === 'Backspace') {
+      deleteLast();
+    } else if (event.key === 'Escape') {
+      clearAll();
+    } else if (event.key === 'x' || event.key === 'X') {
+      appendCharacter('x');
+    }
+  });
+});
