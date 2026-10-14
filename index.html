@@ -1,297 +1,177 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Tool Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        #calc-expression {
+            width: 100%;
+            height: 40px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: right;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        #calc-result {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background: #e0e0e0;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #d5d5d5;
+        }
+        .btn-equal {
+            background: #4CAF50;
+            color: white;
+            grid-column: span 2;
+        }
+        .btn-equal:hover {
+            background: #45a049;
+        }
+    </style>
 </head>
 <body>
+
+<div class="calculator">
+    <h2>Student Calculator</h2>
+    <input type="text" id="calc-expression" placeholder="0">
+    <div id="calc-result">= 0</div>
+    
+    <div class="buttons">
+        <button data-act="clear">C</button>
+        <button data-act="delete">DEL</button>
+        <button data-act="append" data-val="/">/</button>
+        <button data-act="append" data-val="*">*</button>
+        
+        <button data-act="append" data-val="7">7</button>
+        <button data-act="append" data-val="8">8</button>
+        <button data-act="append" data-val="9">9</button>
+        <button data-act="append" data-val="-">-</button>
+        
+        <button data-act="append" data-val="4">4</button>
+        <button data-act="append" data-val="5">5</button>
+        <button data-act="append" data-val="6">6</button>
+        <button data-act="append" data-val="+">+</button>
+        
+        <button data-act="append" data-val="1">1</button>
+        <button data-act="append" data-val="2">2</button>
+        <button data-act="append" data-val="3">3</button>
+        <button data-act="eval" class="btn-equal">=</button>
+        
+        <button data-act="append" data-val="0" style="grid-column: span 2;">0</button>
+        <button data-act="append" data-val=".">.</button>
+    </div>
+    
+    <ul id="history-list" style="margin-top: 15px; padding-left: 20px; font-size: 14px; max-height: 100px; overflow-y: auto;"></ul>
+</div>
+
 <script>
-  
-/**
- * MathPilot UI Controller
- * Safer event handling and error checking
- */
-document.addEventListener('DOMContentLoaded', function () {
-  const exprInput = document.getElementById('calc-expression');
-  const resultDisplay = document.getElementById('calc-result');
-  const historyList = document.getElementById('history-list');
-  const modeToggle = document.getElementById('btn-mode-toggle');
-  const themeToggle = document.getElementById('btn-theme-toggle');
-
-  let currentExpression = '';
-  let memoryRegister = 0;
-  let grapher = null;
-
-  // Check if the math engine is available
-  function getEngine() {
-    if (
-      !window.MathEngine ||
-      typeof window.MathEngine.evaluate !== 'function'
-    ) {
-      throw new Error(
-        'Math engine missing. Please check the MathEngine script.'
-      );
-    }
-    return window.MathEngine;
-  }
-
-  // Initialize graph safely
-  const canvas = document.getElementById('graph-canvas');
-
-  if (canvas && typeof window.MathGrapher === 'function') {
-    try {
-      grapher = new window.MathGrapher('graph-canvas');
-
-      window.addEventListener('resize', function () {
-        if (grapher && typeof grapher.resize === 'function') {
-          grapher.resize();
-        }
-      });
-    } catch (error) {
-      console.error('Grapher initialization failed:', error);
-    }
-  }
-
-  // Load saved theme
-  try {
-    const savedTheme = localStorage.getItem('mp_theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  } catch (error) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
-
-  // Theme toggle
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function () {
-      const currentTheme =
-        document.documentElement.getAttribute('data-theme');
-
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-      document.documentElement.setAttribute('data-theme', newTheme);
-
+  // Simple Math Engine fallback if missing
+  window.MathEngine = window.MathEngine || {
+    evaluate: function(expr) {
       try {
-        localStorage.setItem('mp_theme', newTheme);
-      } catch (error) {
-        console.warn('Theme preference could not be saved.');
+        return Function('"use strict";return (' + expr + ')')();
+      } catch (e) {
+        throw new Error('Invalid expression');
       }
-
-      if (grapher && typeof grapher.draw === 'function') {
-        grapher.draw();
-      }
-    });
-  }
-
-  // Keep expression synchronized with the input
-  if (exprInput) {
-    exprInput.addEventListener('input', function () {
-      currentExpression = exprInput.value;
-    });
-  }
-
-  // Evaluate current expression
-  function evaluateCurrent() {
-    if (!currentExpression.trim()) {
-      if (resultDisplay) resultDisplay.textContent = '0';
-      return;
     }
+  };
 
-    try {
-      const engine = getEngine();
-      const result = engine.evaluate(currentExpression);
+  document.addEventListener('DOMContentLoaded', function () {
+    const exprInput = document.getElementById('calc-expression');
+    const resultDisplay = document.getElementById('calc-result');
+    const historyList = document.getElementById('history-list');
 
-      if (resultDisplay) {
-        resultDisplay.textContent = '= ' + result;
+    let currentExpression = '';
+
+    function evaluateCurrent() {
+      if (!currentExpression.trim()) {
+        if (resultDisplay) resultDisplay.textContent = '= 0';
+        return;
       }
-
-      saveHistory(currentExpression, result);
-
-      if (
-        grapher &&
-        currentExpression.includes('x') &&
-        typeof grapher.draw === 'function'
-      ) {
-        grapher.currentExpression = currentExpression;
-        grapher.draw();
-      }
-    } catch (error) {
-      if (resultDisplay) {
-        resultDisplay.textContent =
-          error.message || 'Invalid expression';
-      }
-      console.error('Calculation error:', error);
-    }
-  }
-
-  // Append a character
-  function appendCharacter(value) {
-    if (value === undefined || value === null) return;
-
-    currentExpression += String(value);
-
-    if (exprInput) {
-      exprInput.value = currentExpression;
-    }
-  }
-
-  // Clear calculator
-  function clearAll() {
-    currentExpression = '';
-
-    if (exprInput) exprInput.value = '';
-    if (resultDisplay) resultDisplay.textContent = '0';
-  }
-
-  // Delete last character
-  function deleteLast() {
-    currentExpression = currentExpression.slice(0, -1);
-
-    if (exprInput) {
-      exprInput.value = currentExpression;
-    }
-  }
-
-  // Save calculation history safely
-  function saveHistory(expression, result) {
-    if (!historyList) return;
-
-    const item = document.createElement('li');
-    item.className = 'history-item';
-
-    const exprSpan = document.createElement('span');
-    exprSpan.className = 'h-expr';
-    exprSpan.textContent = expression;
-
-    const resultStrong = document.createElement('strong');
-    resultStrong.className = 'h-res';
-    resultStrong.textContent = String(result);
-
-    item.appendChild(exprSpan);
-    item.appendChild(document.createTextNode(' = '));
-    item.appendChild(resultStrong);
-
-    item.addEventListener('click', function () {
-      currentExpression = expression;
-
-      if (exprInput) exprInput.value = expression;
-
-      if (resultDisplay) {
-        resultDisplay.textContent = '= ' + result;
-      }
-    });
-
-    historyList.prepend(item);
-
-    while (historyList.children.length > 20) {
-      historyList.removeChild(historyList.lastElementChild);
-    }
-  }
-
-  // Calculator button events
-  document.querySelectorAll('button[data-act]').forEach(function (button) {
-    button.addEventListener('click', function () {
-      const action = button.dataset.act;
-      const value = button.dataset.val;
-
-      switch (action) {
-        case 'append':
-          appendCharacter(value);
-          break;
-
-        case 'eval':
-          evaluateCurrent();
-          break;
-
-        case 'clear':
-          clearAll();
-          break;
-
-        case 'delete':
-          deleteLast();
-          break;
-
-        case 'mem-add':
-          try {
-            memoryRegister += getEngine().evaluate(
-              currentExpression || '0'
-            );
-          } catch (error) {
-            console.error('Memory add error:', error);
-            if (resultDisplay) {
-              resultDisplay.textContent =
-                error.message || 'Memory operation failed';
-            }
-          }
-          break;
-
-        case 'mem-recall':
-          appendCharacter(memoryRegister);
-          break;
-
-        case 'mem-clear':
-          memoryRegister = 0;
-          break;
-      }
-    });
-  });
-
-  // Radians / degrees toggle
-  if (modeToggle) {
-    modeToggle.addEventListener('click', function () {
       try {
-        const engine = getEngine();
-
-        if (typeof engine.setMode !== 'function') {
-          throw new Error('Angle mode function is missing.');
+        const result = window.MathEngine.evaluate(currentExpression);
+        if (resultDisplay) {
+          resultDisplay.textContent = '= ' + result;
         }
-
-        const newMode = engine.mode === 'RAD' ? 'DEG' : 'RAD';
-        engine.setMode(newMode);
-        modeToggle.textContent = newMode;
-
-        evaluateCurrent();
+        saveHistory(currentExpression, result);
       } catch (error) {
         if (resultDisplay) {
-          resultDisplay.textContent = error.message;
+          resultDisplay.textContent = 'Error';
         }
       }
+    }
+
+    function appendCharacter(value) {
+      currentExpression += String(value);
+      if (exprInput) exprInput.value = currentExpression;
+    }
+
+    function clearAll() {
+      currentExpression = '';
+      if (exprInput) exprInput.value = '';
+      if (resultDisplay) resultDisplay.textContent = '= 0';
+    }
+
+    function deleteLast() {
+      currentExpression = currentExpression.slice(0, -1);
+      if (exprInput) exprInput.value = currentExpression;
+    }
+
+    function saveHistory(expression, result) {
+      if (!historyList) return;
+      const item = document.createElement('li');
+      item.textContent = expression + ' = ' + result;
+      historyList.prepend(item);
+    }
+
+    document.querySelectorAll('button[data-act]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const action = button.dataset.act;
+        const value = button.dataset.val;
+
+        if (action === 'append') appendCharacter(value);
+        if (action === 'eval') evaluateCurrent();
+        if (action === 'clear') clearAll();
+        if (action === 'delete') deleteLast();
+      });
     });
-  }
+  });
+</script>
 
-  // Graph controls
-  const graphExprInput =
-    document.getElementById('graph-expression-input');
-
-  const plotButton =
-    document.getElementById('btn-graph-plot');
-
-  if (plotButton && graphExprInput && grapher) {
-    plotButton.addEventListener('click', function () {
-      grapher.currentExpression = graphExprInput.value;
-      grapher.draw();
-    });
-
-    const zoomIn = document.getElementById('btn-graph-zin');
-    const zoomOut = document.getElementById('btn-graph-zout');
-    const resetGraph = document.getElementById('btn-graph-reset');
-
-    if (zoomIn) {
-      zoomIn.addEventListener('click', function () {
-        grapher.zoom(0.8);
-      });
-    }
-
-    if (zoomOut) {
-      zoomOut.addEventListener('click', function () {
-        grapher.zoom(1.2);
-      });
-    }
-
-    if (resetGraph) {
-      resetGraph.addEventListener('click', function () {
-        grapher.reset();
-      });
-    }
-  }
-
-  // 
+</body>
+</html>
