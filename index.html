@@ -3,114 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Tool Hub</title>
+    
+    <!-- SEO Meta Tags for Google Ranking -->
+    <title>TI-84 Online Scientific Calculator & Student Tool Hub</title>
+    <meta name="description" content="Free online TI-84 style scientific calculator, math solver, and student practice quiz hub. Calculate algebra, trigonometry, and test your skills easily.">
+    <meta name="keywords" content="TI-84 calculator online, scientific calculator, student tool hub, math solver, online calculator for students">
+    <meta name="robots" content="index, follow">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0b0e14;
+            color: #ffffff;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            flex-direction: column;
         }
+        .container {
+            width: 100%;
+            max-width: 380px;
+        }
+        /* TI-84 Calculator Body Style */
         .calculator {
-            background: #fff;
+            background: #222629;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-            width: 300px;
+            border-radius: 14px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.7);
+            border: 3px solid #3a3f44;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 0;
+            color: #72efdd;
+            letter-spacing: 1px;
+        }
+        /* TI-84 LCD Screen Style */
+        .ti-screen {
+            background: #9ead86;
+            color: #111;
+            padding: 12px;
+            border-radius: 6px;
+            border: 3px inset #556044;
+            margin-bottom: 15px;
+            min-height: 60px;
         }
         #calc-expression {
             width: 100%;
-            height: 40px;
-            font-size: 18px;
-            margin-bottom: 10px;
+            background: transparent;
+            border: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
             text-align: right;
-            padding: 5px;
-            box-sizing: border-box;
+            outline: none;
+            color: #111;
         }
         #calc-result {
-            font-size: 22px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
             font-weight: bold;
             text-align: right;
-            margin-bottom: 15px;
-            color: #333;
+            margin-top: 5px;
+            color: #000;
         }
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
         button {
-            padding: 15px;
-            font-size: 16px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
             cursor: pointer;
-            border: none;
-            background: #e0e0e0;
-            border-radius: 5px;
+            border: 1px solid #111;
+            background: #3a3f44;
+            color: #fff;
+            border-radius: 4px;
+            transition: 0.1s;
         }
-        button:hover {
-            background: #d5d5d5;
+        button:active {
+            transform: scale(0.95);
         }
-        .btn-equal {
-            background: #4CAF50;
-            color: white;
+        .btn-sci {
+            background: #1b4965;
+        }
+        .btn-eval {
+            background: #52b788;
+            color: black;
             grid-column: span 2;
         }
-        .btn-equal:hover {
-            background: #45a049;
+        .btn-clear {
+            background: #e63946;
+            color: white;
+        }
+        #history-list {
+            margin-top: 10px;
+            padding-left: 10px;
+            font-size: 12px;
+            max-height: 80px;
+            overflow-y: auto;
+            background: #15181a;
+            padding: 8px;
+            border-radius: 4px;
+            list-style: none;
+            color: #aaa;
+        }
+        #history-list li {
+            padding: 2px 0;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+        }
+
+        /* Practice Questions Section */
+        .questions-section {
+            background: #222629;
+            padding: 20px;
+            border-radius: 14px;
+            border: 3px solid #3a3f44;
+            box-sizing: border-box;
+        }
+        .question-card {
+            margin-bottom: 15px;
+            background: #15181a;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .question-card p {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+        .options label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            color: #cbd5e1;
+        }
+        .submit-quiz {
+            width: 100%;
+            background: #52b788;
+            color: black;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        #quiz-score {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #72efdd;
         }
     </style>
 </head>
 <body>
 
-<div class="calculator">
-    <h2>Student Calculator</h2>
-    <input type="text" id="calc-expression" placeholder="0">
-    <div id="calc-result">= 0</div>
-    
-    <div class="buttons">
-        <button data-act="clear">C</button>
-        <button data-act="delete">DEL</button>
-        <button data-act="append" data-val="/">/</button>
-        <button data-act="append" data-val="*">*</button>
+<div class="container">
+    <!-- TI-84 Style Calculator -->
+    <div class="calculator">
+        <h2>TI-84 PLUS CE</h2>
         
-        <button data-act="append" data-val="7">7</button>
-        <button data-act="append" data-val="8">8</button>
-        <button data-act="append" data-val="9">9</button>
-        <button data-act="append" data-val="-">-</button>
+        <div class="ti-screen">
+            <input type="text" id="calc-expression" placeholder="0">
+            <div id="calc-result">= 0</div>
+        </div>
         
-        <button data-act="append" data-val="4">4</button>
-        <button data-act="append" data-val="5">5</button>
-        <button data-act="append" data-val="6">6</button>
-        <button data-act="append" data-val="+">+</button>
+        <div class="buttons">
+            <button class="btn-clear" data-act="clear">C</button>
+            <button data-act="delete">DEL</button>
+            <button class="btn-sci" data-act="append" data-val="(">(</button>
+            <button class="btn-sci" data-act="append" data-val=")">)</button>
+            
+            <button class="btn-sci" data-act="append" data-val="Math.sin(">sin</button>
+            <button class="btn-sci" data-act="append" data-val="Math.cos(">cos</button>
+            <button class="btn-sci" data-act="append" data-val="Math.tan(">tan</button>
+            <button data-act="append" data-val="/">÷</button>
+            
+            <button data-act="append" data-val="7">7</button>
+            <button data-act="append" data-val="8">8</button>
+            <button data-act="append" data-val="9">9</button>
+            <button data-act="append" data-val="*">×</button>
+            
+            <button data-act="append" data-val="4">4</button>
+            <button data-act="append" data-val="5">5</button>
+            <button data-act="append" data-val="6">6</button>
+            <button data-act="append" data-val="-">-</button>
+            
+            <button data-act="append" data-val="1">1</button>
+            <button data-act="append" data-val="2">2</button>
+            <button data-act="append" data-val="3">3</button>
+            <button data-act="append" data-val="+">+</button>
+            
+            <button data-act="append" data-val="0">0</button>
+            <button data-act="append" data-val=".">.</button>
+            <button data-act="eval" class="btn-eval">=</button>
+        </div>
         
-        <button data-act="append" data-val="1">1</button>
-        <button data-act="append" data-val="2">2</button>
-        <button data-act="append" data-val="3">3</button>
-        <button data-act="eval" class="btn-equal">=</button>
-        
-        <button data-act="append" data-val="0" style="grid-column: span 2;">0</button>
-        <button data-act="append" data-val=".">.</button>
+        <ul id="history-list"></ul>
     </div>
-    
-    <ul id="history-list" style="margin-top: 15px; padding-left: 20px; font-size: 14px; max-height: 100px; overflow-y: auto;"></ul>
+
+    <!-- Practice Questions Section -->
+    <div class="questions-section">
+        <h2>Math Practice Quiz</h2>
+        
+        <div class="question-card">
+            <p>1. What is the value of sin(90°)?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="0"> 0</label>
+                <label><input type="radio" name="q1" value="1"> 1</label>
+                <label><input type="radio" name="q1" value="-1"> -1</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <p>2. What is 15 × 4 + 10?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="60"> 60</label>
+                <label><input type="radio" name="q2" value="70"> 70</label>
+                <label><input type="radio" name="q2" value="50"> 50</label>
+            </div>
+        </div>
+
+        <button class="submit-quiz" onclick="checkAnswers()">Submit Answers</button>
+        <div id="quiz-score"></div>
+    </div>
 </div>
 
 <script>
-  // Simple Math Engine fallback if missing
-  window.MathEngine = window.MathEngine || {
-    evaluate: function(expr) {
-      try {
-        return Function('"use strict";return (' + expr + ')')();
-      } catch (e) {
-        throw new Error('Invalid expression');
-      }
-    }
-  };
-
   document.addEventListener('DOMContentLoaded', function () {
     const exprInput = document.getElementById('calc-expression');
     const resultDisplay = document.getElementById('calc-result');
@@ -124,11 +252,17 @@
         return;
       }
       try {
-        const result = window.MathEngine.evaluate(currentExpression);
+        let sanitized = currentExpression
+          .replace(/sin\(/g, 'Math.sin(Math.PI/180*')
+          .replace(/cos\(/g, 'Math.cos(Math.PI/180*')
+          .replace(/tan\(/g, 'Math.tan(Math.PI/180*');
+          
+        const result = Function('"use strict";return (' + sanitized + ')')();
+        
         if (resultDisplay) {
-          resultDisplay.textContent = '= ' + result;
+          resultDisplay.textContent = '= ' + Number(result.toFixed(6));
         }
-        saveHistory(currentExpression, result);
+        saveHistory(currentExpression, Number(result.toFixed(6)));
       } catch (error) {
         if (resultDisplay) {
           resultDisplay.textContent = 'Error';
@@ -156,7 +290,17 @@
       if (!historyList) return;
       const item = document.createElement('li');
       item.textContent = expression + ' = ' + result;
+      
+      item.addEventListener('click', function () {
+        currentExpression = expression;
+        if (exprInput) exprInput.value = expression;
+        if (resultDisplay) resultDisplay.textContent = '= ' + result;
+      });
+
       historyList.prepend(item);
+      while (historyList.children.length > 10) {
+        historyList.removeChild(historyList.lastElementChild);
+      }
     }
 
     document.querySelectorAll('button[data-act]').forEach(function (button) {
@@ -171,9 +315,19 @@
       });
     });
   });
+
+  function checkAnswers() {
+    let score = 0;
+    const q1 = document.querySelector('input[name="q1"]:checked');
+    const q2 = document.querySelector('input[name="q2"]:checked');
+
+    if (q1 && q1.value === '1') score++;
+    if (q2 && q2.value === '70') score++
+
+    document.getElementById('quiz-score').textContent = 'Your Score: ' + score + ' / 2';
+  }
 </script>
 
 </body>
-            </html>
-
-            
+    </html>
+    
