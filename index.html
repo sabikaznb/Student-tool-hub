@@ -4,11 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Optimization Meta Tags -->
+    <!-- 🚀 Advanced SEO Meta Tags -->
     <title>MathPilot Pro CE | Online Graphing & Advanced Scientific Calculator</title>
     <meta name="description" content="Free online premium student calculator layout inspired by advanced graphing tools. Execute matrix calculus, algebra, and plot equations instantly.">
     <meta name="keywords" content="handheld calculator online, scientific graphing calculator, math simulator, test prep tool">
+    <link rel="canonical" href="https://yourdomain.com">
     <meta name="robots" content="index, follow">
+
+    <!-- 🌐 Schema Markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MathPilot Pro CE",
+      "url": "https://yourdomain.com",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5 support",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
 
     <style>
         body {
@@ -22,150 +41,151 @@
             align-items: center;
             min-height: 100vh;
         }
-        .calc-case {
+        
+        /* Exact Handheld Casing Design from Screenshot */
+        .calculator-container {
             background: #000000;
             width: 100%;
             max-width: 385px;
             padding: 15px 12px;
-            border-radius: 24px;
-            border: 4px solid #32373d;
+            border-radius: 20px;
+            border: 3px solid #32373d;
             box-shadow: 0px 25px 50px rgba(0,0,0,0.9);
             box-sizing: border-box;
         }
-        /* Top Screen Frame */
+
+        /* Screen Wrapper with Blue/Red Outline */
         .screen-bezel {
             background: #1a1e24;
-            padding: 8px;
-            border-radius: 8px;
+            padding: 6px;
+            border-radius: 6px;
             border: 2px solid #0056b3;
             margin-bottom: 12px;
         }
-        .lcd-display {
+
+        /* White LCD Emulator Screen */
+        .lcd-window {
             background: #ffffff;
             color: #000000;
             font-family: 'Courier New', Courier, monospace;
-            padding: 6px;
-            min-height: 140px;
+            padding: 8px;
+            min-height: 160px;
             border-radius: 2px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
-        .screen-status {
-            font-size: 8px;
+            box-shadow: inset 0px 3px 8px rgba(0,0,0,0.2);
+            font-size: 13px;
             font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            color: #333;
+            line-height: 1.2;
+        }
+
+        .status-header {
+            font-size: 8px;
             border-bottom: 1px solid #ccc;
             padding-bottom: 2px;
-            letter-spacing: 0.5px;
-        }
-        .screen-body {
-            flex-grow: 1;
+            margin-bottom: 6px;
+            color: #333;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            text-align: right;
-            padding-top: 5px;
+            justify-content: space-between;
+            letter-spacing: 0.3px;
         }
-        #input-line {
-            font-size: 14px;
-            color: #000;
-            min-height: 18px;
-            letter-spacing: 0.5px;
+
+        .screen-text {
+            text-align: left;
         }
-        #output-line {
-            font-size: 22px;
-            font-weight: bold;
-            color: #000;
+        .window-header {
+            color: #0056b3;
+            font-size: 13px;
             margin-top: 4px;
         }
 
-        /* Keyboard Grid Structure */
-        .keypad {
+        /* 5-Column Button Grid Layout */
+        .keypad-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 6px;
         }
 
-        /* Top Function Keys */
-        .f-key {
+        /* Top Row Function Row keys */
+        .f-switches {
             background: #2d3138;
             color: #ffffff;
             font-size: 10px;
             padding: 6px 0;
-            border-radius: 4px;
             border: 1px solid #1c1f24;
-            border-bottom: 3px solid #111;
+            border-bottom: 3px solid #000;
+            border-radius: 4px;
             text-transform: lowercase;
+            cursor: pointer;
         }
 
-        /* Key Layout Elements */
-        .key-container {
+        /* Printed Sub-Labels on Plastic Frame Configuration */
+        .key-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
         }
-        .sec-label {
+
+        .top-print-label {
             font-size: 8px;
             font-weight: bold;
-            height: 10px;
-            margin-bottom: 2px;
+            height: 11px;
+            margin-bottom: 1px;
             width: 100%;
             text-align: center;
             white-space: nowrap;
         }
-        .sec-left { color: #4299e1; } /* 2nd Labels */
-        .sec-right { color: #48bb78; } /* Alpha Labels */
+        .lbl-blue { color: #3182ce; }
+        .lbl-green { color: #38a169; }
+        .lbl-gray { color: #a0aec0; }
 
-        button.calc-btn {
+        /* General Buttons Specs */
+        button.hardware-btn {
             width: 100%;
-            padding: 10px 0;
-            font-size: 12px;
+            padding: 9px 0;
+            font-size: 11px;
             font-weight: bold;
             border-radius: 5px;
-            border: 1px solid #111;
+            border: 1px solid #000;
             cursor: pointer;
             box-sizing: border-box;
             transition: transform 0.05s;
         }
-        button.calc-btn:active {
+        button.hardware-btn:active {
             transform: scale(0.92);
         }
 
-        /* Exact Button Color Categorization */
-        .k-dark { background: #1c1f24; color: #fff; }
-        .k-blue { background: #1a365d; color: #fff; }
-        .k-green { background: #22543d; color: #fff; }
-        .k-white { background: #ffffff; color: #000; font-size: 15px; padding: 8px 0; }
-        .k-op { background: #2d3748; color: #fff; font-size: 15px; }
-        .k-enter { background: #4a5568; color: #fff; }
+        /* Perfect Button Color Customizations matching image */
+        .btn-black { background: #1c1f24; color: #fff; border-bottom: 2px solid #000; }
+        .btn-blue { background: #1a365d; color: #fff; border-bottom: 2px solid #000; }
+        .btn-green { background: #22543d; color: #fff; border-bottom: 2px solid #000; }
+        .btn-white { background: #ffffff; color: #000; font-size: 15px; padding: 7px 0; border-bottom: 2px solid #cbd5e1; }
+        .btn-darkgray { background: #2d3748; color: #fff; font-size: 13px; border-bottom: 2px solid #1a202c; }
 
-        /* Custom Cross Direction D-Pad Structure */
-        .dpad-container {
+        /* Circular Arrow D-Pad Zone Spanning 2 Rows & 2 Columns */
+        .dpad-zone {
             grid-column: span 2;
             grid-row: span 2;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
-        .dpad-circle {
-            width: 68px;
-            height: 68px;
-            background: #2d3138;
+        .circular-dpad {
+            width: 72px;
+            height: 72px;
+            background: #23272e;
             border-radius: 50%;
-            border: 2px solid #111;
+            border: 2px solid #000;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
+            box-shadow: inset 0px 3px 6px rgba(0,0,0,0.6);
         }
-        .d-arrow {
+        .arrow-dir {
             background: transparent;
             border: none;
-            color: #72efdd;
+            color: #3182ce;
             font-size: 10px;
             cursor: pointer;
             display: flex;
@@ -177,81 +197,76 @@
 </head>
 <body>
 
-<div class="calc-case">
-    <!-- Blue Border Top LCD Screen -->
+<div class="calculator-container">
+    <!-- Blue Border Top LCD Screen Bezel Frame -->
     <div class="screen-bezel">
-        <div class="lcd-display">
-            <div class="screen-status">
+        <div class="lcd-window">
+            <div class="status-header">
                 <span>NORMAL FLOAT AUTO REAL RADIAN MP</span>
                 <span>🔋</span>
             </div>
-            <div class="screen-body">
-                <div id="input-line"></div>
-                <div id="output-line">0</div>
+            <div class="screen-text" id="screen-terminal">
+                <div>WINDOW</div>
+                <div class="window-header">Xmin=-10</div>
+                <div>Xmax=10</div>
+                <div>Xscl=1</div>
+                <div>Ymin=-10</div>
+                <div>Ymax=10</div>
+                <div>Yscl=1</div>
+                <div>Xres=1</div>
             </div>
         </div>
     </div>
 
-    <!-- Complete 10-Row Keypad Grid System -->
-    <div class="keypad">
-        <!-- Row 1: Graphing Function row -->
-        <button class="f-key" onclick="alert('Y= Mode')">y=</button>
-        <button class="f-key" onclick="alert('Window Settings')">window</button>
-        <button class="f-key" onclick="alert('Zoom Factor')">zoom</button>
-        <button class="f-key" onclick="alert('Trace Plot')">trace</button>
-        <button class="f-key" onclick="alert('Graph View')">graph</button>
+    <!-- Complete Handheld Interface Keypad Layout Matrix -->
+    <div class="keypad-grid">
+        <!-- Row 1: Graphing Layout System Switches -->
+        <button class="f-switches" onclick="btnAction('y=')">y=</button>
+        <button class="f-switches" onclick="btnAction('window')">window</button>
+        <button class="f-switches" onclick="btnAction('zoom')">zoom</button>
+        <button class="f-switches" onclick="btnAction('trace')">trace</button>
+        <button class="f-switches" onclick="btnAction('graph')">graph</button>
 
-        <!-- Row 2 & 3 Left Keys + D-PAD Alignment -->
+        <!-- Row 2 & 3 Left Blocks Sharing Matrix with D-Pad Array -->
         <!-- Row 2 Left -->
-        <div class="key-container">
-            <span class="sec-label sec-left">quit</span>
-            <button class="calc-btn k-blue" onclick="alert('2nd Layer Active')">2nd</button>
+        <div class="key-wrapper">
+            <span class="top-print-label lbl-blue">quit</span>
+            <button class="hardware-btn btn-blue" onclick="btnAction('2nd')">2nd</button>
         </div>
-        <div class="key-container">
-            <span class="sec-label sec-left">ins</span>
-            <button class="calc-btn k-dark" onclick="alert('Mode Menu')">mode</button>
+        <div class="key-wrapper">
+            <span class="top-print-label lbl-gray">ins</span>
+            <button class="hardware-btn btn-black" onclick="btnAction('mode')">mode</button>
         </div>
-        <div class="key-container">
-            <span class="sec-label"></span>
-            <button class="calc-btn k-dark" onclick="backspace()">del</button>
+        <div class="key-wrapper">
+            <span class="top-print-label"></span>
+            <button class="hardware-btn btn-black" onclick="btnAction('del')">del</button>
         </div>
         
-        <!-- D-PAD Area Spanning 2 Rows / 2 Columns -->
-        <div class="dpad-container">
-            <div class="dpad-circle">
-                <div></div><button class="d-arrow" onclick="alert('Up')">▲</button><div></div>
-                <button class="d-arrow" onclick="alert('Left')">◀</button><div></div><button class="d-arrow" onclick="alert('Right')">▶</button>
-                <div></div><button class="d-arrow" onclick="alert('Down')">▼</button><div></div>
+        <!-- Circular D-PAD Integration -->
+        <div class="dpad-zone">
+            <div class="circular-dpad">
+                <div></div><button class="arrow-dir" onclick="btnAction('▲')">▲</button><div></div>
+                <button class="arrow-dir" onclick="btnAction('◀')">◀</button><div></div><button class="arrow-dir" onclick="btnAction('▶')">▶</button>
+                <div></div><button class="arrow-dir" onclick="btnAction('▼')">▼</button><div></div>
             </div>
         </div>
 
         <!-- Row 3 Left -->
-        <div class="key-container">
-            <span class="sec-label sec-left">A-lock</span>
-            <button class="calc-btn k-green" onclick="alert('Alpha Lock Active')">alpha</button>
+        <div class="key-wrapper">
+            <span class="top-print-label lbl-green">A-lock</span>
+            <button class="hardware-btn btn-green" onclick="btnAction('alpha')">alpha</button>
         </div>
-        <div class="key-container">
-            <span class="sec-label sec-left">link</span>
-            <button class="calc-btn k-dark" onclick="press('X')">X,T,θ,n</button>
+        <div class="key-wrapper">
+            <span class="top-print-label lbl-blue">link</span>
+            <button class="hardware-btn btn-black" onclick="btnAction('X')">X,T,θ,n</button>
         </div>
-        <div class="key-container">
-            <span class="sec-label sec-left">list</span>
-            <button class="calc-btn k-dark" onclick="alert('Stat Menu')">stat</button>
+        <div class="key-wrapper">
+            <span class="top-print-label lbl-blue">list</span>
+            <button class="hardware-btn btn-black" onclick="btnAction('stat')">stat</button>
         </div>
 
         <!-- Row 4 -->
-        <div class="key-container"><span class="sec-label sec-left">test A</span><button class="calc-btn k-dark" onclick="alert('Math Options')">math</button></div>
-        <div class="key-container"><span class="sec-label sec-left">angle B</span><button class="calc-btn k-dark" onclick="alert('Apps')">apps</button></div>
-        <div class="key-container"><span class="sec-label sec-left">draw C</span><button class="calc-btn k-dark" onclick="alert('Prgm')">prgm</button></div>
-        <div class="key-container"><span class="sec-label sec-left">distr</span><button class="calc-btn k-dark" onclick="alert('Vars')">vars</button></div>
-        <div class="key-container"><span class="sec-label"></span><button class="calc-btn k-dark" onclick="clearAll()">clear</button></div>
-
-        <!-- Row 5 -->
-        <div class="key-container"><span class="sec-label sec-left">matrix D</span><button class="calc-btn k-dark" onclick="press('**(-1)')">x⁻¹</button></div>
-        <div class="key-container"><span class="sec-label sec-left">sin⁻¹ E</span><button class="calc-btn k-dark" onclick="press('sin(')">sin</button></div>
-        <div class="key-container"><span class="sec-label sec-left">cos⁻¹ F</span><button class="calc-btn k-dark" onclick="press('cos(')">cos</button></div>
-        <div class="key-container"><span class="sec-label sec-left">tan⁻¹ G</span><button class="calc-btn k-dark" onclick="press('tan(')">tan</button></div>
-        <div class="key-container"><span class="sec-label sec-left">π H</span><button class="calc-btn k-dark" onclick="press('^')">^</button></div>
-
-        <!-- Row 6 -->
+        <div class="key-wrapper"><span class="top-print-label lbl-blue">test A</span><button class="hardware-btn btn-black" onclick="btnAction('math')">math</button></div>
+        <div class="key-wrapper"><span class="top-print-label lbl-blue">angle B</span><button class="hardware-btn btn-black" onclick="btnAction('apps')">apps</button></div>
+        <div class="key-wrapper"><span class="top-print-label lbl-blue">draw C</span><button class="hardware-btn btn-black" onclick="btnAction('prgm')">prgm</button></div>
         
