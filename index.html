@@ -4,10 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>MathPilot Tools | Advanced Online Scientific Calculator</title>
-    <meta name="description" content="Use our free advanced online scientific calculator for complex mathematics, engineering, algebra, and trigonometry calculations.">
-    <meta name="keywords" content="scientific calculator online, advanced scientific calculator, free math solver">
+    <!-- Core SEO Optimization Meta Tags -->
+    <title>MathPilot Tools | Free Advanced Online Scientific Calculator</title>
+    <meta name="description" content="Access the free online scientific calculator by MathPilot Tools. Easily compute fractions, logarithms, trigonometry, exponents, and engineering equations.">
+    <meta name="keywords" content="scientific calculator online, best advanced calculator, online math solver, engineering calculator free">
+    <link rel="canonical" href="https://yourdomain.com">
     <meta name="robots" content="index, follow">
+
+    <!-- Schema.org JSON-LD for Search Engine Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MathPilot Scientific Calculator",
+      "url": "https://yourdomain.com",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
 
     <style>
         body {
@@ -24,8 +44,9 @@
         }
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
         }
+        /* Engineering Grade Calculator Frame */
         .calculator {
             background: #222629;
             padding: 20px;
@@ -40,7 +61,9 @@
             margin-top: 0;
             color: #72efdd;
             letter-spacing: 2px;
+            margin-bottom: 15px;
         }
+        /* Realistic LCD Digital Display Window */
         .ti-screen {
             background: #9ead86;
             color: #111;
@@ -48,7 +71,7 @@
             border-radius: 6px;
             border: 3px inset #556044;
             margin-bottom: 15px;
-            min-height: 80px;
+            min-height: 85px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -59,10 +82,11 @@
             background: transparent;
             border: none;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 15px;
+            font-size: 16px;
             text-align: right;
             outline: none;
-            color: #333;
+            color: #222;
+            letter-spacing: 0.5px;
         }
         #calc-result {
             font-family: 'Courier New', Courier, monospace;
@@ -70,15 +94,17 @@
             font-weight: bold;
             text-align: right;
             color: #000;
+            overflow-x: auto;
+            white-space: nowrap;
         }
-        /* 5-Column Grid for Professional Scientific Look */
+        /* 6-Column Grid Layout for Full Technical Keyboard Spectrum */
         .buttons {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
         }
         button {
-            padding: 12px 5px;
+            padding: 12px 2px;
             font-size: 13px;
             font-weight: bold;
             font-family: inherit;
@@ -86,13 +112,14 @@
             border: 1px solid #111;
             background: #2d3238;
             color: #fff;
-            border-radius: 6px;
-            transition: 0.1s;
+            border-radius: 4px;
+            transition: all 0.05s ease;
         }
         button:active {
-            transform: scale(0.95);
+            transform: scale(0.93);
             background: #444;
         }
+        /* Button Style Classes */
         .btn-sci {
             background: #1b4965;
             color: #72efdd;
@@ -114,26 +141,58 @@
             grid-column: span 2;
             font-size: 16px;
         }
+        /* Live Activity History Panel */
+        .history-box {
+            background: #15181a;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 15px;
+            max-height: 65px;
+            overflow-y: auto;
+            border: 1px solid #3a3f44;
+        }
+        .history-box p {
+            margin: 0 0 4px 0;
+            font-size: 10px;
+            color: #72efdd;
+            text-transform: uppercase;
+        }
+        #history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 11px;
+            color: #aaa;
+            text-align: right;
+        }
+        #history-list li {
+            padding: 2px 0;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- Calculator Frame -->
     <main class="calculator">
-        <h1>MATHPILOT ADVANCED CE</h1>
+        <h1>MATHPILOT PROFESSIONAL CE</h1>
         
+        <!-- UI Screen Output -->
         <div class="ti-screen">
             <input type="text" id="calc-expression" readonly placeholder="0">
             <div id="calc-result">0</div>
         </div>
         
-        <!-- Professional 5-Column Scientific Pad Layout -->
+        <!-- 6-Column Scientific Layout Pad -->
         <div class="buttons">
             <!-- Row 1 -->
             <button class="btn-clear" onclick="clearAll()">C</button>
             <button class="btn-del" onclick="backspace()">DEL</button>
             <button class="btn-sci" onclick="input('(')">(</button>
             <button class="btn-sci" onclick="input(')')">)</button>
+            <button class="btn-sci" onclick="input('%')">%</button>
             <button class="btn-op" onclick="input('/')">÷</button>
             
             <!-- Row 2 -->
@@ -141,6 +200,7 @@
             <button class="btn-sci" onclick="input('cos(')">cos</button>
             <button class="btn-sci" onclick="input('tan(')">tan</button>
             <button class="btn-sci" onclick="input('^')">xʸ</button>
+            <button class="btn-sci" onclick="input('²')">x²</button>
             <button class="btn-op" onclick="input('*')">×</button>
             
             <!-- Row 3 -->
@@ -148,27 +208,35 @@
             <button class="btn-sci" onclick="input('ln(')">ln</button>
             <button class="btn-sci" onclick="input('√(')">√</button>
             <button class="btn-sci" onclick="input('π')">π</button>
+            <button class="btn-sci" onclick="input('e')">e</button>
             <button class="btn-op" onclick="input('-')">-</button>
             
-            <!-- Row 4 (Numbers & Plus) -->
+            <!-- Row 4 (Numbers + Operations Combination) -->
             <button onclick="input('7')">7</button>
             <button onclick="input('8')">8</button>
             <button onclick="input('9')">9</button>
-            <button class="btn-sci" onclick="input('e')">e</button>
+            <button onclick="input('4')">4</button>
+            <button onclick="input('5')">5</button>
             <button class="btn-op" onclick="input('+')">+</button>
             
             <!-- Row 5 -->
-            <button onclick="input('4')">4</button>
-            <button onclick="input('5')">5</button>
             <button onclick="input('6')">6</button>
             <button onclick="input('1')">1</button>
             <button onclick="input('2')">2</button>
-            
-            <!-- Row 6 -->
             <button onclick="input('3')">3</button>
             <button onclick="input('0')">0</button>
             <button onclick="input('.')">.</button>
-            <button class="btn-eval" onclick="runExecution()">=</button>
+            
+            <!-- Row 6 -->
+            <button class="btn-sci" style="grid-column: span 2;" onclick="input('1/')">1/x</button>
+            <button class="btn-sci" style="grid-column: span 2;" onclick="input('exp(')">exp</button>
+            <button class="btn-equal" onclick="runExecution()">=</button>
+        </div>
+
+        <!-- History Log System -->
+        <div class="history-box">
+            <p>Calculations Log:</p>
+            <ul id="history-list"></ul>
         </div>
     </main>
 </div>
@@ -176,6 +244,7 @@
 <script>
     const exprView = document.getElementById('calc-expression');
     const resView = document.getElementById('calc-result');
+    const logStack = document.getElementById('history-list');
 
     function input(char) {
         exprView.value += char;
@@ -190,12 +259,14 @@
         exprView.value = exprView.value.slice(0, -1);
     }
 
+    // Mathematical String Parser Engine 
     function runExecution() {
-        let inputString = exprView.value;
-        if (!inputString) return;
+        let rawInput = exprView.value;
+        if (!rawInput) return;
 
         try {
-            let cleanExpr = inputString
+            // Mapping UI expressions safely to Standard JavaScript Math Notation
+            let parsedExpr = rawInput
                 .replace(/÷/g, '/')
                 .replace(/×/g, '*')
                 .replace(/π/g, 'Math.PI')
@@ -206,21 +277,16 @@
                 .replace(/log\(/g, 'Math.log10(')
                 .replace(/ln\(/g, 'Math.log(')
                 .replace(/√\(/g, 'Math.sqrt(')
-                .replace(/\^/g, '**');
+                .replace(/%/g, '/100')
+                .replace(/²/g, '**2')
+                .replace(/\^/g, '**')
+                .replace(/exp\(/g, 'Math.exp(');
 
-            let finalValue = Function('"use strict"; return (' + cleanExpr + ')')();
-
-            if (finalValue === Infinity || finalValue === -Infinity || isNaN(finalValue)) {
-                resView.innerText = "Math Error";
-                return;
+            // Handle Reciprocal Edge cases like 1/x format logic
+            if(parsedExpr.startsWith("1/")) {
+                let rest = parsedExpr.substring(2);
+                parsedExpr = `1/(${rest})`;
             }
 
-            resView.innerText = Number(finalValue.toFixed(8));
-
-        } catch (err) {
-            resView.innerText = "Syntax Error";
-        }
-    }
-</script>
-</body>
-</html>
+            // Secure mathematical string context execution sandbox evaluation
+    
