@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Optimization Meta Tags -->
     <title>MathPilot Tools | Advanced Online Scientific Calculator</title>
-    <meta name="description" content="Use our free online scientific calculator for algebra, trigonometry, and advanced math queries. Smooth performance on both mobile and desktop.">
-    <meta name="keywords" content="scientific calculator online, math solver, free math calculator, online scientific calculator">
+    <meta name="description" content="Use our free advanced online scientific calculator for complex mathematics, engineering, algebra, and trigonometry calculations.">
+    <meta name="keywords" content="scientific calculator online, advanced scientific calculator, free math solver">
     <meta name="robots" content="index, follow">
 
     <style>
@@ -25,7 +24,7 @@
         }
         .container {
             width: 100%;
-            max-width: 380px;
+            max-width: 400px;
         }
         .calculator {
             background: #222629;
@@ -34,14 +33,13 @@
             box-shadow: 0px 10px 30px rgba(0,0,0,0.7);
             border: 3px solid #3a3f44;
             box-sizing: border-box;
-            margin-bottom: 20px;
         }
         h1 {
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             margin-top: 0;
             color: #72efdd;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         .ti-screen {
             background: #9ead86;
@@ -50,7 +48,7 @@
             border-radius: 6px;
             border: 3px inset #556044;
             margin-bottom: 15px;
-            min-height: 70px;
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -61,28 +59,27 @@
             background: transparent;
             border: none;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
+            font-size: 15px;
             text-align: right;
             outline: none;
-            color: #222;
+            color: #333;
         }
         #calc-result {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             text-align: right;
             color: #000;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
+        /* 5-Column Grid for Professional Scientific Look */
         .buttons {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 8px;
         }
         button {
-            padding: 14px 10px;
-            font-size: 15px;
+            padding: 12px 5px;
+            font-size: 13px;
             font-weight: bold;
             font-family: inherit;
             cursor: pointer;
@@ -98,9 +95,11 @@
         }
         .btn-sci {
             background: #1b4965;
+            color: #72efdd;
         }
-        .btn-sci:active {
-            background: #2a6f97;
+        .btn-op {
+            background: #3a3f44;
+            color: #fff;
         }
         .btn-clear {
             background: #e63946;
@@ -113,97 +112,63 @@
             background: #52b788;
             color: black;
             grid-column: span 2;
-        }
-        .btn-eval:active {
-            background: #74c69d;
-        }
-        .history-box {
-            background: #15181a;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 10px;
-            max-height: 75px;
-            overflow-y: auto;
-            border: 1px solid #3a3f44;
-        }
-        .history-box p {
-            margin: 0 0 5px 0;
-            font-size: 11px;
-            color: #72efdd;
-            text-transform: uppercase;
-        }
-        #history-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 12px;
-            color: #aaa;
-            text-align: right;
-        }
-        #history-list li {
-            padding: 3px 0;
-            border-bottom: 1px solid #222;
-            cursor: pointer;
-        }
-        #history-list li:hover {
-            color: #fff;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Main Scientific Calculator Section -->
     <main class="calculator">
-        <h1>MATHPILOT CE</h1>
+        <h1>MATHPILOT ADVANCED CE</h1>
         
-        <!-- LCD Display Window -->
         <div class="ti-screen">
             <input type="text" id="calc-expression" readonly placeholder="0">
             <div id="calc-result">0</div>
         </div>
         
-        <!-- Calculator Interactive Grid Pad -->
+        <!-- Professional 5-Column Scientific Pad Layout -->
         <div class="buttons">
+            <!-- Row 1 -->
             <button class="btn-clear" onclick="clearAll()">C</button>
             <button class="btn-del" onclick="backspace()">DEL</button>
             <button class="btn-sci" onclick="input('(')">(</button>
             <button class="btn-sci" onclick="input(')')">)</button>
+            <button class="btn-op" onclick="input('/')">÷</button>
             
+            <!-- Row 2 -->
             <button class="btn-sci" onclick="input('sin(')">sin</button>
             <button class="btn-sci" onclick="input('cos(')">cos</button>
             <button class="btn-sci" onclick="input('tan(')">tan</button>
-            <button class="btn-sci" onclick="input('/')">÷</button>
+            <button class="btn-sci" onclick="input('^')">xʸ</button>
+            <button class="btn-op" onclick="input('*')">×</button>
             
+            <!-- Row 3 -->
             <button class="btn-sci" onclick="input('log(')">log</button>
             <button class="btn-sci" onclick="input('ln(')">ln</button>
             <button class="btn-sci" onclick="input('√(')">√</button>
-            <button class="btn-sci" onclick="input('*')">×</button>
+            <button class="btn-sci" onclick="input('π')">π</button>
+            <button class="btn-op" onclick="input('-')">-</button>
             
+            <!-- Row 4 (Numbers & Plus) -->
             <button onclick="input('7')">7</button>
             <button onclick="input('8')">8</button>
             <button onclick="input('9')">9</button>
-            <button onclick="input('-')">-</button>
+            <button class="btn-sci" onclick="input('e')">e</button>
+            <button class="btn-op" onclick="input('+')">+</button>
             
+            <!-- Row 5 -->
             <button onclick="input('4')">4</button>
             <button onclick="input('5')">5</button>
             <button onclick="input('6')">6</button>
-            <button onclick="input('+')">+</button>
-            
             <button onclick="input('1')">1</button>
             <button onclick="input('2')">2</button>
-            <button onclick="input('3')">3</button>
-            <button class="btn-sci" onclick="input('^')">^</button>
             
+            <!-- Row 6 -->
+            <button onclick="input('3')">3</button>
             <button onclick="input('0')">0</button>
             <button onclick="input('.')">.</button>
             <button class="btn-eval" onclick="runExecution()">=</button>
-        </div>
-
-        <!-- Dynamic Calculation Log History -->
-        <div class="history-box">
-            <p>History Log:</p>
-            <ul id="history-list"></ul>
         </div>
     </main>
 </div>
@@ -211,37 +176,30 @@
 <script>
     const exprView = document.getElementById('calc-expression');
     const resView = document.getElementById('calc-result');
-    const logList = document.getElementById('history-list');
 
-    // Display par value input karne ke liye
     function input(char) {
-        if (exprView.value === "" && ['+', '*', '/', '^'].includes(char)) {
-            return; // Khali screen par operators block karne ke liye
-        }
         exprView.value += char;
     }
 
-    // Screen mukammal saaf karne ke liye
     function clearAll() {
         exprView.value = '';
         resView.innerText = '0';
     }
 
-    // Ek aakhri lafz delete (backspace) karne ke liye
     function backspace() {
         exprView.value = exprView.value.slice(0, -1);
     }
 
-    // Mathematical calculations evaluate karne ka mehfooz engine
     function runExecution() {
         let inputString = exprView.value;
         if (!inputString) return;
 
         try {
-            // Formula parsing rules JavaScript Math system ke liye
             let cleanExpr = inputString
                 .replace(/÷/g, '/')
                 .replace(/×/g, '*')
+                .replace(/π/g, 'Math.PI')
+                .replace(/e/g, 'Math.E')
                 .replace(/sin\(/g, 'Math.sin(')
                 .replace(/cos\(/g, 'Math.cos(')
                 .replace(/tan\(/g, 'Math.tan(')
@@ -250,7 +208,6 @@
                 .replace(/√\(/g, 'Math.sqrt(')
                 .replace(/\^/g, '**');
 
-            // JavaScript engine evaluation execution
             let finalValue = Function('"use strict"; return (' + cleanExpr + ')')();
 
             if (finalValue === Infinity || finalValue === -Infinity || isNaN(finalValue)) {
@@ -258,34 +215,12 @@
                 return;
             }
 
-            // Decimal points formatting balance rakhne ke liye
-            let formattedOutput = Number(finalValue.toFixed(8));
-            resView.innerText = formattedOutput;
-
-            // History log stack update
-            let item = document.createElement('li');
-            item.innerText = `${inputString} = ${formattedOutput}`;
-            item.onclick = () => { exprView.value = inputString; };
-            logList.prepend(item);
+            resView.innerText = Number(finalValue.toFixed(8));
 
         } catch (err) {
             resView.innerText = "Syntax Error";
         }
     }
-
-    // Physical Keyboard support configuration
-    document.addEventListener('keydown', function(event) {
-        const validKeys = '0123456789.+-*/()^';
-        if (validKeys.includes(event.key)) {
-            input(event.key);
-        } else if (event.key === 'Enter') {
-            runExecution();
-        } else if (event.key === 'Backspace') {
-            backspace();
-        } else if (event.key === 'Escape') {
-            clearAll();
-        }
-    });
 </script>
 </body>
 </html>
