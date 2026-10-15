@@ -4,277 +4,288 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Core SEO Optimization -->
-    <title>MathPilot Tools | Free Online Scientific & Graphing Calculator</title>
-    <meta name="description" content="Access MathPilot Tools, a free online scientific and graphing calculator for students. Plot functions, solve equations, and practice math quizzes instantly.">
-    <meta name="keywords" content="free online scientific calculator, online graphing calculator, math solver, algebra calculator, trigonometry calculator">
-    <link rel="canonical" href="https://yourdomain.com">
+    <!-- SEO Optimization Meta Tags -->
+    <title>MathPilot Tools | Advanced Online Scientific Calculator</title>
+    <meta name="description" content="Use our free online scientific calculator for algebra, trigonometry, and advanced math queries. Smooth performance on both mobile and desktop.">
+    <meta name="keywords" content="scientific calculator online, math solver, free math calculator, online scientific calculator">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph for Social Media SEO -->
-    <meta property="og:title" content="MathPilot Tools | Free Online Scientific & Graphing Calculator">
-    <meta property="og:description" content="Solve complex algebra, trigonometry, and calculus equations visually with our smart interactive tool.">
-    <meta property="og:type" content="website">
-
-    <!-- Schema.org Structured Data for Rich Snippets -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "MathPilot Tools",
-      "url": "https://yourdomain.com",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "All",
-      "browserRequirements": "Requires HTML5 support Canvas",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
-
     <style>
-        :root {
-            --bg-color: #0b0e14;
-            --card-bg: #222629;
-            --text-color: #ffffff;
-            --screen-bg: #9ead86;
-            --screen-text: #111111;
-            --btn-bg: #3a3f44;
-            --btn-sci: #1b4965;
-            --accent: #72efdd;
-        }
-
-        [data-theme="light"] {
-            --bg-color: #f0f2f5;
-            --card-bg: #ffffff;
-            --text-color: #1a1a1a;
-            --screen-bg: #e2e8f0;
-            --screen-text: #0f172a;
-            --btn-bg: #cbd5e1;
-            --btn-sci: #93c5fd;
-            --accent: #0f766e;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0b0e14;
+            color: #ffffff;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             flex-direction: column;
-            transition: all 0.3s ease;
         }
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .container {
             width: 100%;
-            max-width: 800px;
-            margin-bottom: 20px;
+            max-width: 380px;
         }
-        .theme-toggle {
-            background: var(--btn-sci);
-            color: var(--text-color);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            width: 100%;
-            max-width: 800px;
-        }
-        @media (min-width: 768px) {
-            .main-layout {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        .calculator, .graphing-panel, .quiz-section {
-            background: var(--card-bg);
+        .calculator {
+            background: #222629;
             padding: 20px;
             border-radius: 14px;
-            box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
-            border: 2px solid var(--btn-bg);
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.7);
+            border: 3px solid #3a3f44;
             box-sizing: border-box;
+            margin-bottom: 20px;
         }
-        h1, h2 {
+        h1 {
+            text-align: center;
+            font-size: 18px;
             margin-top: 0;
-            font-size: 20px;
-            color: var(--accent);
-            letter-spacing: 0.5px;
+            color: #72efdd;
+            letter-spacing: 1px;
         }
         .ti-screen {
-            background: var(--screen-bg);
-            color: var(--screen-text);
+            background: #9ead86;
+            color: #111;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 6px;
+            border: 3px inset #556044;
             margin-bottom: 15px;
             min-height: 70px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-sizing: border-box;
         }
         #calc-expression {
             width: 100%;
             background: transparent;
             border: none;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 16px;
             text-align: right;
             outline: none;
-            color: inherit;
+            color: #222;
         }
         #calc-result {
+            font-family: 'Courier New', Courier, monospace;
             font-size: 22px;
             font-weight: bold;
             text-align: right;
+            color: #000;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
         }
-        button.calc-btn {
-            padding: 12px;
-            font-size: 14px;
+        button {
+            padding: 14px 10px;
+            font-size: 15px;
             font-weight: bold;
+            font-family: inherit;
             cursor: pointer;
-            border: none;
-            background: var(--btn-bg);
-            color: var(--text-color);
+            border: 1px solid #111;
+            background: #2d3238;
+            color: #fff;
             border-radius: 6px;
-            transition: transform 0.1s, opacity 0.1s;
+            transition: 0.1s;
         }
-        button.calc-btn:active {
+        button:active {
             transform: scale(0.95);
+            background: #444;
         }
-        .btn-sci { background: var(--btn-sci) !important; }
-        .btn-eval { background: #52b788 !important; color: black !important; grid-column: span 2; }
-        .btn-clear { background: #e63946 !important; color: white !important; }
-        
-        /* Canvas & Controls */
-        canvas {
-            background: #ffffff;
+        .btn-sci {
+            background: #1b4965;
+        }
+        .btn-sci:active {
+            background: #2a6f97;
+        }
+        .btn-clear {
+            background: #e63946;
+            color: white;
+        }
+        .btn-del {
+            background: #4a4e69;
+        }
+        .btn-eval {
+            background: #52b788;
+            color: black;
+            grid-column: span 2;
+        }
+        .btn-eval:active {
+            background: #74c69d;
+        }
+        .history-box {
+            background: #15181a;
+            padding: 10px;
             border-radius: 6px;
-            width: 100%;
-            height: 250px;
-            display: block;
-        }
-        .graph-controls {
-            display: flex;
-            gap: 8px;
             margin-top: 10px;
+            max-height: 75px;
+            overflow-y: auto;
+            border: 1px solid #3a3f44;
         }
-        .graph-controls button {
-            flex: 1;
-            padding: 8px;
-            font-size: 12px;
-            cursor: pointer;
-            background: var(--btn-bg);
-            color: var(--text-color);
-            border: none;
-            border-radius: 4px;
+        .history-box p {
+            margin: 0 0 5px 0;
+            font-size: 11px;
+            color: #72efdd;
+            text-transform: uppercase;
         }
         #history-list {
-            margin-top: 10px;
-            font-size: 12px;
-            max-height: 60px;
-            overflow-y: auto;
-            background: rgba(0,0,0,0.2);
-            padding: 8px;
-            border-radius: 4px;
             list-style: none;
-            padding-left: 0;
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+            color: #aaa;
+            text-align: right;
         }
         #history-list li {
-            padding: 3px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 3px 0;
+            border-bottom: 1px solid #222;
             cursor: pointer;
-            text-align: right;
+        }
+        #history-list li:hover {
+            color: #fff;
         }
     </style>
 </head>
-<body data-theme="dark">
+<body>
 
-<header class="app-header">
-    <h1>MathPilot Tools</h1>
-    <button class="theme-toggle" onclick="toggleTheme()">☀️ Theme</button>
-</header>
-
-<main class="main-layout">
-    <!-- Calculator Panel -->
-    <section class="calculator">
-        <h2>Advanced Scientific Engine</h2>
+<div class="container">
+    <!-- Main Scientific Calculator Section -->
+    <main class="calculator">
+        <h1>MATHPILOT CE</h1>
+        
+        <!-- LCD Display Window -->
         <div class="ti-screen">
             <input type="text" id="calc-expression" readonly placeholder="0">
             <div id="calc-result">0</div>
         </div>
         
+        <!-- Calculator Interactive Grid Pad -->
         <div class="buttons">
-            <button class="calc-btn btn-clear" onclick="clearCalc()">C</button>
-            <button class="calc-btn btn-sci" onclick="input('sin(')">sin</button>
-            <button class="calc-btn btn-sci" onclick="input('cos(')">cos</button>
-            <button class="calc-btn btn-sci" onclick="backspace()">⌫</button>
+            <button class="btn-clear" onclick="clearAll()">C</button>
+            <button class="btn-del" onclick="backspace()">DEL</button>
+            <button class="btn-sci" onclick="input('(')">(</button>
+            <button class="btn-sci" onclick="input(')')">)</button>
             
-            <button class="calc-btn btn-sci" onclick="input('tan(')">tan</button>
-            <button class="calc-btn btn-sci" onclick="input('log(')">log</button>
-            <button class="calc-btn btn-sci" onclick="input('π')">π</button>
-            <button class="calc-btn" onclick="input('/')">/</button>
+            <button class="btn-sci" onclick="input('sin(')">sin</button>
+            <button class="btn-sci" onclick="input('cos(')">cos</button>
+            <button class="btn-sci" onclick="input('tan(')">tan</button>
+            <button class="btn-sci" onclick="input('/')">÷</button>
             
-            <button class="calc-btn" onclick="input('7')">7</button>
-            <button class="calc-btn" onclick="input('8')">8</button>
-            <button class="calc-btn" onclick="input('9')">9</button>
-            <button class="calc-btn" onclick="input('*')">*</button>
+            <button class="btn-sci" onclick="input('log(')">log</button>
+            <button class="btn-sci" onclick="input('ln(')">ln</button>
+            <button class="btn-sci" onclick="input('√(')">√</button>
+            <button class="btn-sci" onclick="input('*')">×</button>
             
-            <button class="calc-btn" onclick="input('4')">4</button>
-            <button class="calc-btn" onclick="input('5')">5</button>
-            <button class="calc-btn" onclick="input('6')">6</button>
-            <button class="calc-btn" onclick="input('-')">-</button>
+            <button onclick="input('7')">7</button>
+            <button onclick="input('8')">8</button>
+            <button onclick="input('9')">9</button>
+            <button onclick="input('-')">-</button>
             
-            <button class="calc-btn" onclick="input('1')">1</button>
-            <button class="calc-btn" onclick="input('2')">2</button>
-            <button class="calc-btn" onclick="input('3')">3</button>
-            <button class="calc-btn" onclick="input('+')">+</button>
+            <button onclick="input('4')">4</button>
+            <button onclick="input('5')">5</button>
+            <button onclick="input('6')">6</button>
+            <button onclick="input('+')">+</button>
             
-            <button class="calc-btn" onclick="input('0')">0</button>
-            <button class="calc-btn" onclick="input('.')">.</button>
-            <button class="calc-btn btn-eval" onclick="calculate()">=</button>
+            <button onclick="input('1')">1</button>
+            <button onclick="input('2')">2</button>
+            <button onclick="input('3')">3</button>
+            <button class="btn-sci" onclick="input('^')">^</button>
+            
+            <button onclick="input('0')">0</button>
+            <button onclick="input('.')">.</button>
+            <button class="btn-eval" onclick="runExecution()">=</button>
         </div>
-        <ul id="history-list"></ul>
-    </section>
 
-    <!-- Graphing Panel -->
-    <section class="graphing-panel">
-        <h2>Interactive Function Plotter</h2>
-        <div style="margin-bottom: 10px;">
-            <label for="eq-select" style="font-size: 13px;">Select Function: </label>
-            <select id="eq-select" onchange="drawGraph()" style="padding: 4px; border-radius: 4px;">
-                <option value="x*x">y = x² (Quadratic)</option>
-                <option value="Math.sin(x)">y = sin(x) (Trig)</option>
-                <option value="2*x + 1">y = 2x + 1 (Linear)</option>
-            </select>
+        <!-- Dynamic Calculation Log History -->
+        <div class="history-box">
+            <p>History Log:</p>
+            <ul id="history-list"></ul>
         </div>
-        <canvas id="graphCanvas"></canvas>
-        <div class="graph-controls">
-            <button onclick="zoom(0.8)">Zoom In</button>
-            <button onclick="zoom(1.2)">Zoom Out</button>
-            <button onclick="resetGraph()">Reset View</button>
-        </div>
-    </section>
-</main>
+    </main>
+</div>
 
 <script>
-    let exprInput = document.getElementById('calc-expression');
-    let resOutput = document.getElementById('calc-result');
-    let historyList = document.getElementById('history-list');
-    let canvas = document.getElementById('graphCanvas');
-    
+    const exprView = document.getElementById('calc-expression');
+    const resView = document.getElementById('calc-result');
+    const logList = document.getElementById('history-list');
+
+    // Display par value input karne ke liye
+    function input(char) {
+        if (exprView.value === "" && ['+', '*', '/', '^'].includes(char)) {
+            return; // Khali screen par operators block karne ke liye
+        }
+        exprView.value += char;
+    }
+
+    // Screen mukammal saaf karne ke liye
+    function clearAll() {
+        exprView.value = '';
+        resView.innerText = '0';
+    }
+
+    // Ek aakhri lafz delete (backspace) karne ke liye
+    function backspace() {
+        exprView.value = exprView.value.slice(0, -1);
+    }
+
+    // Mathematical calculations evaluate karne ka mehfooz engine
+    function runExecution() {
+        let inputString = exprView.value;
+        if (!inputString) return;
+
+        try {
+            // Formula parsing rules JavaScript Math system ke liye
+            let cleanExpr = inputString
+                .replace(/÷/g, '/')
+                .replace(/×/g, '*')
+                .replace(/sin\(/g, 'Math.sin(')
+                .replace(/cos\(/g, 'Math.cos(')
+                .replace(/tan\(/g, 'Math.tan(')
+                .replace(/log\(/g, 'Math.log10(')
+                .replace(/ln\(/g, 'Math.log(')
+                .replace(/√\(/g, 'Math.sqrt(')
+                .replace(/\^/g, '**');
+
+            // JavaScript engine evaluation execution
+            let finalValue = Function('"use strict"; return (' + cleanExpr + ')')();
+
+            if (finalValue === Infinity || finalValue === -Infinity || isNaN(finalValue)) {
+                resView.innerText = "Math Error";
+                return;
+            }
+
+            // Decimal points formatting balance rakhne ke liye
+            let formattedOutput = Number(finalValue.toFixed(8));
+            resView.innerText = formattedOutput;
+
+            // History log stack update
+            let item = document.createElement('li');
+            item.innerText = `${inputString} = ${formattedOutput}`;
+            item.onclick = () => { exprView.value = inputString; };
+            logList.prepend(item);
+
+        } catch (err) {
+            resView.innerText = "Syntax Error";
+        }
+    }
+
+    // Physical Keyboard support configuration
+    document.addEventListener('keydown', function(event) {
+        const validKeys = '0123456789.+-*/()^';
+        if (validKeys.includes(event.key)) {
+            input(event.key);
+        } else if (event.key === 'Enter') {
+            runExecution();
+        } else if (event.key === 'Backspace') {
+            backspace();
+        } else if (event.key === 'Escape') {
+            clearAll();
+        }
+    });
+</script>
+</body>
+</html>
